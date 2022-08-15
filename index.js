@@ -3,10 +3,10 @@ que não precisam ou não querem mais */
 
 /*Dependências e variáveis*/
 const SECOND = 1000;
-const twit = require("twit");
+const  twit = require("twit");
 require("dotenv").config();
 
-const Dara = new twit({
+const DARA = new twit({
     consumer_key: process.env.API_KEY,
     consumer_secret: process.env.API_SECRET_KEY,
     access_token: process.env.ACCESS_TOKEN,
@@ -27,7 +27,7 @@ let query = {
 /*Funções*/
 function DaraInit() {
 
-    Dara.get("search/tweets", query, BotGotLatestTweets);
+    DARA.get("search/tweets", query, BotGotLatestTweets);
 
     function BotGotLatestTweets(error, data, response) {
         if (error){
@@ -35,12 +35,12 @@ function DaraInit() {
             console.log(error);
         } 
         else {
-             let id = {
+              id = {
             id:data.statuses[0].id_str,
         }                 
     }
 
-    Dara.post("statuses/retweet/:id", id, BotRetweeted);
+    DARA.post("statuses/retweet/:id", id, BotRetweeted);
 
   
  function BotRetweeted(error, response) {
