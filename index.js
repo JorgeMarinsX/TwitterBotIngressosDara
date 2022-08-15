@@ -1,8 +1,9 @@
 /*Dara - um bot para ajudar usuários do Twitter a vender ingressos
 que não precisam ou não querem mais */
 
-/*Dependências*/
-var twit = require("twit");
+/*Dependências e variáveis*/
+const SECOND = 1000;
+const twit = require("twit");
 require("dotenv").config();
 
 const Dara = new twit({
@@ -10,15 +11,13 @@ const Dara = new twit({
     consumer_secret: process.env.API_SECRET_KEY,
     access_token: process.env.ACCESS_TOKEN,
     access_token_secret: process.env.ACCESS_TOKEN_SECRET,
-    timeout_ms: 60 * 1000,
+    timeout_ms: 60 * SECOND,
 });
 
-/*Variáveis*/
 
 /* Os termos e condições dos tweets que iremos buscar*/
-
-var query = {
-    q: "(#vendoingresso) OR (vendo ingresso) -zap -whatsapp -to:vendo_ingresso -is:reply",
+let query = {
+    q: "#vendoingresso OR vendo ingresso -to:vendo_ingresso -is:reply",
     result_type: "recent",
 
 }
@@ -36,7 +35,7 @@ function DaraInit() {
             console.log(error);
         } 
         else {
-             var id = {
+             let id = {
             id:data.statuses[0].id_str,
         }                 
     }
@@ -63,7 +62,7 @@ function DaraInit() {
 /*Execução*/
 
 /*Determina o intervalo com o qual o bot irá executar a função*/
-setInterval (DaraInit, 20 * 1000); 
+setInterval (DaraInit, 20 * SECOND); 
 
 /*Inicializa o robô*/
 DaraInit();
